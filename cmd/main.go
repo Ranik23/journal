@@ -12,11 +12,9 @@ import (
 	"journal/logs"
 )
 
-// Глобальные переменные
 var options []string
 var cursor = 0
 
-// Функция для установки текущего вида на верх
 func setCurrentViewOnTop(g *gocui.Gui, name string) (*gocui.View, error) {
 	if _, err := g.SetCurrentView(name); err != nil {
 		return nil, err
@@ -24,7 +22,6 @@ func setCurrentViewOnTop(g *gocui.Gui, name string) (*gocui.View, error) {
 	return g.SetViewOnTop(name)
 }
 
-// Основной макет интерфейса
 func layout(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
 
@@ -56,7 +53,6 @@ func layout(g *gocui.Gui) error {
 	return nil
 }
 
-// Функция для рисования списка опций в выпадающем меню
 func drawOptions(v *gocui.View) {
 	v.Clear()
 	green := color.New(color.FgGreen).SprintFunc()
@@ -68,8 +64,6 @@ func drawOptions(v *gocui.View) {
 		}
 	}
 }
-
-// Переход к следующей опции
 func nextOption(g *gocui.Gui, v *gocui.View) error {
 	if cursor < len(options)-1 {
 		cursor++
@@ -79,7 +73,6 @@ func nextOption(g *gocui.Gui, v *gocui.View) error {
 	return updateDropdown(g)
 }
 
-// Переход к предыдущей опции
 func prevOption(g *gocui.Gui, v *gocui.View) error {
 	if cursor > 0 {
 		cursor--
@@ -89,7 +82,6 @@ func prevOption(g *gocui.Gui, v *gocui.View) error {
 	return updateDropdown(g)
 }
 
-// Обновление выпадающего меню
 func updateDropdown(g *gocui.Gui) error {
 	v, err := g.View("dropdown")
 	if err != nil {
@@ -99,7 +91,6 @@ func updateDropdown(g *gocui.Gui) error {
 	return nil
 }
 
-// Выбор опции
 func selectOption(g *gocui.Gui, v *gocui.View) error {
 
 	selected := options[cursor]
@@ -116,7 +107,7 @@ func selectOption(g *gocui.Gui, v *gocui.View) error {
 		return err
 	}
 	serviceView.Clear()
-	fmt.Fprintf(serviceView, "Chosen: %s", selected)
+	fmt.Fprintf(serviceView, "%s", selected)
 
 	array, err := log.FetchLogs(selected, "", 50)
 	if err != nil {

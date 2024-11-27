@@ -42,9 +42,22 @@ func FetchLogs(service string, priority string, limit int) (*[]LogItem, error) {
 		}
 	}
 
-	if err := journal.SeekHead(); err != nil {
+	if err := journal.SeekTail(); err != nil {
 		return nil, ErrSeekTail
 	}
+
+	count := 0
+
+	for i := 0; i < limit; i++ {
+		count += 1
+		_, err := journal.Previous()
+		if err != nil {
+			count -= 1
+			break
+		}
+	}
+
+	limit = count
 
 	i, err := journal.Next()
 	if err != nil || i == 0 {

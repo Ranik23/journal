@@ -15,11 +15,14 @@ type LogItem struct {
 
 
 func (l LogItem) String() string {
+
+	c := color.New(color.Reset, color.Bold)
+
 	return fmt.Sprintf(
 		"%s Priority=%s %s %s",
 		color.GreenString("%s", l.Time),  
 		color.RedString("%s", l.Priority),
 		color.CyanString("%s", l.Service), 
-		l.Message,
+		c.Sprintf("%s", l.Message),
 	)
 }

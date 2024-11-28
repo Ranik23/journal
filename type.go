@@ -1,8 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"github.com/fatih/color"
+)
 
-// import "fmt"
 
 type LogItem struct {
 	Service  string
@@ -12,26 +14,12 @@ type LogItem struct {
 }
 
 
-func (l *LogItem) Printer() string {
-	priorityColor := map[string]string{
-		"INFO":    "\033[1;34m",
-		"WARNING": "\033[1;33m", 
-		"ERROR":   "\033[1;31m", 
-		"DEBUG":   "\033[1;36m",
-	}
-
-	color, exists := priorityColor[l.Priority]
-	if !exists {
-		color = "\033[0m" 
-	}
-
+func (l LogItem) String() string {
 	return fmt.Sprintf(
-		"%s[%s]\033[0m \033[1;32m%s\033[0m %s: %s",
-		color,      
-		l.Priority, 
-		l.Time,     
-		l.Service, 
-		l.Message,  
+		"%s Priority=%s %s %s",
+		color.GreenString("%s", l.Time),  
+		color.RedString("%s", l.Priority),
+		color.CyanString("%s", l.Service), 
+		l.Message,
 	)
 }
-

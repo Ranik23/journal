@@ -5,11 +5,7 @@ import (
 	"github.com/jroimartin/gocui"
 )
 
-
-
-
 func main() {
-
 	services, err := loadServices()
 	if err != nil {
 		Log.Panicln(err)
@@ -36,7 +32,7 @@ func main() {
 	if err := g.SetKeybinding("dropdown", gocui.KeyEnter, gocui.ModNone, selectOption); err != nil {
 		Log.Panicln(err)
 	}
-	if err := g.SetKeybinding("", gocui.KeyCtrlC, gocui.ModNone, quit); err != nil {
+	if err := g.SetKeybinding("", gocui.KeyCtrlC, gocui.ModNone, quitOption); err != nil {
 		Log.Panicln(err)
 	}
 

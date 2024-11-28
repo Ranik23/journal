@@ -6,7 +6,6 @@ import (
 	"github.com/jroimartin/gocui"
 )
 
-
 func layout(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
 
@@ -29,7 +28,6 @@ func layout(g *gocui.Gui) error {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
-		v.Title = "Logs"
 		v.Wrap = true
 	}
 
@@ -46,7 +44,7 @@ func layout(g *gocui.Gui) error {
 		}
 	}
 
-	if v, err := g.SetView("text", 0, maxY/2 + 3, maxX/5, maxY/2 + 5); err != nil {
+	if v, err := g.SetView("text", 0, maxY/2+3, maxX/5, maxY/2+5); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
